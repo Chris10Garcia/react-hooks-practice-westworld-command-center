@@ -4,5 +4,10 @@
 index.js
 |--- App
     |--- WestworldMap
-        |--Area
+        |--- Area
     |--- Headquarters
+        |--- ColdStorage
+            |--- HostList
+        |--- Details
+            |--- HostInfo
+        |--- LogPanel

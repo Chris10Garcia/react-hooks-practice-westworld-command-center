@@ -12,7 +12,6 @@ function Area(props) {
       <h3 className="labels">
         {name}
       </h3>
-      {/* See Checkpoint 1 item 2 in the Readme for a clue as to what goes here */}
     </div>
   );
 }

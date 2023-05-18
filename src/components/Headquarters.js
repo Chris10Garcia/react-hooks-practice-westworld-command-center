@@ -6,6 +6,9 @@ import ColdStorage from "./ColdStorage";
 import LogPanel from "./LogPanel"
 
 function Headquarters() {
+
+  
+
   return (
     <Grid celled="internally">
       <Grid.Column width={8}>
