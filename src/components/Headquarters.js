@@ -7,7 +7,7 @@ import LogPanel from "./LogPanel"
 
 function Headquarters() {
 
-  
+    
 
   return (
     <Grid celled="internally">
