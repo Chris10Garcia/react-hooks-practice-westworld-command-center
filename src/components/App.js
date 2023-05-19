@@ -28,7 +28,7 @@ function App() {
 
   return (
     <Segment id="app">
-      <WestworldMap hosts = {hosts} selectHost = {selectHost} areaList = {areaList} />
+      <WestworldMap hosts = {hosts} selectHost = {selectHost} selectedHost = {selectedHost} areaList = {areaList} />
       <Headquarters hosts = {hosts} selectHost = {selectHost} selectedHost = {selectedHost} />
     </Segment>
   );

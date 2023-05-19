@@ -3,13 +3,13 @@ import "../stylesheets/Area.css";
 import Host from "./Host";
 
 function Area(props) {
-  const { name, hosts, selectHost } = props
+  const { name, hosts, selectHost, selectedHost } = props
 
   const activeHosts = hosts.filter(host => host.active === true)
 
   const renderActiveHosts = activeHosts.map(host => {
     return (
-      <Host key = {host.id} image = {host.imageUrl} id = {host.id} selectHost = {selectHost} />
+      <Host key = {host.id} image = {host.imageUrl} id = {host.id} selectHost = {selectHost} selectedHost = {selectedHost} />
           )
     })
 

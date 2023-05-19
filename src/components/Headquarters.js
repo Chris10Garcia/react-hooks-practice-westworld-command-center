@@ -7,13 +7,13 @@ import LogPanel from "./LogPanel"
 
 function Headquarters({hosts, selectedHost, selectHost }) {
 
-  const coldHosts = hosts.filter(host => !host.active)
+  
 
 
   return (
     <Grid celled="internally">
       <Grid.Column width={8}>
-        <ColdStorage selectHost = {selectHost} hosts = {coldHosts}/>
+        <ColdStorage selectHost = {selectHost} selectedHost = {selectedHost} hosts = {hosts}/>
       </Grid.Column>
       <Grid.Column width={5}>
         <Details selectedHost = {selectedHost}/>

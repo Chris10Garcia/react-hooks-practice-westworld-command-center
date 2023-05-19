@@ -30,10 +30,14 @@ function HostInfo({selectedHost}) {
     // the 'value' attribute is given via Semantic's Dropdown component.
     // Put a debugger or console.log in here and see what the "value" variable is when you pass in different options.
     // See the Semantic docs for more info: https://react.semantic-ui.com/modules/dropdown/#usage-controlled
+    console.log(e.target, value)
   }
 
   function handleRadioChange() {
     console.log("The radio button fired");
+
+    // fetch request to change status
+    // then set the new object via a cbFunction 
   }
 
   return (
