@@ -7,7 +7,7 @@ import Headquarters from "./Headquarters"
 
 function App() {
 
-  // Here we need state for the selected hosts
+
 
   return (
     <Segment id="app">
