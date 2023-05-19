@@ -18,18 +18,32 @@ function App() {
 
     fetch("http://localhost:3001/areas")
     .then ( r => r.json() )
-    .then ( d => setAreaList(d) )
+    .then ( d => {
+
+      const formattedData = d.map( area => {
+          const nameCorrected = area.name.split("_").map( word => word.charAt(0).toUpperCase() + word.substring(1)).join(" ")
+          area["nameFormatted"] = nameCorrected
+          return area                                 
+        })
+      setAreaList(formattedData) 
+    })
+
   },[])
 
   function selectHost(id){
     setSelectedHost( hosts.find( host => host.id === id))
   }
 
+  function updateList (obj){
+    const updatedList = hosts.map( host => host.id === obj.id ? obj : host)
+    setSelectedHost({...obj})
+    setHosts(updatedList)
+  }
 
   return (
     <Segment id="app">
       <WestworldMap hosts = {hosts} selectHost = {selectHost} selectedHost = {selectedHost} areaList = {areaList} />
-      <Headquarters hosts = {hosts} selectHost = {selectHost} selectedHost = {selectedHost} />
+      <Headquarters hosts = {hosts} selectHost = {selectHost} selectedHost = {selectedHost} areaList = {areaList} updateList = {updateList} />
     </Segment>
   );
 }

@@ -10,34 +10,48 @@ import {
 } from "semantic-ui-react";
 import "../stylesheets/HostInfo.css";
 
-function HostInfo({selectedHost}) {
-  const {firstName, active, gender, imageUrl, area} = selectedHost
+function HostInfo({selectedHost, areaList, hosts, updateList}) {
+  
+  const {firstName, active, gender, imageUrl, area, id} = selectedHost
 
+  const optionsList = areaList.map( location => {
+    return {key: location.name, text: location.nameFormatted, value: location.name}
+  })
 
-  // This state is just to show how the dropdown component works.
-  // Options have to be formatted in this way (array of objects with keys of: key, text, value)
-  // Value has to match the value in the object to render the right text.
-
-  // IMPORTANT: But whether it should be stateful or not is entirely up to you. Change this component however you like.
-  const [options] = useState([
-    { key: "some_area", text: "Some Area", value: "some_area" },
-    { key: "another_area", text: "Another Area", value: "another_area" },
-  ]);
-
-  const [value] = useState("some_area");
+  const [options] = useState(optionsList);
 
   function handleOptionChange(e, { value }) {
     // the 'value' attribute is given via Semantic's Dropdown component.
     // Put a debugger or console.log in here and see what the "value" variable is when you pass in different options.
     // See the Semantic docs for more info: https://react.semantic-ui.com/modules/dropdown/#usage-controlled
-    console.log(e.target, value)
+    const areaLimit = areaList.find( area => area.name === value).limit
+    const currentHostInArea = hosts.filter( host => host.area === value).length
+
+    if (currentHostInArea + 1 > areaLimit){
+      console.log("error, you reached your limit")
+    } else {
+      console.log(value)
+      updateProperty("area", value, selectedHost.id)
+    }
   }
 
   function handleRadioChange() {
-    console.log("The radio button fired");
+    console.log(active);
 
     // fetch request to change status
     // then set the new object via a cbFunction 
+  }
+
+
+  function updateProperty (key, value, id){
+
+    fetch(`http://localhost:3001/hosts/${id}`,{
+      method: "PATCH",
+      headers: {"Content-Type": "application/json", "Accept" : "application/json"},
+      body: JSON.stringify({[key]: value})
+    })
+    .then( r => r.json() )
+    .then( d => updateList(d))
   }
 
   return (
@@ -60,7 +74,7 @@ function HostInfo({selectedHost}) {
               {/* Sometimes the label should take "Decommissioned". How are we going to conditionally render that? */}
               {/* Checked takes a boolean and determines what position the switch is in. Should it always be true? */}
               <Radio
-                onChange={handleRadioChange}
+                onChange={ () => updateProperty("active", !active, id) }
                 label={"Active"}
                 checked={active}
                 slider
@@ -70,7 +84,7 @@ function HostInfo({selectedHost}) {
             Current Area:
             <Dropdown
               onChange={handleOptionChange}
-              value={value}
+              value={area}
               options={options}
               selection
             />

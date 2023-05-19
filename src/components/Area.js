@@ -1,9 +1,10 @@
 import React from "react";
 import "../stylesheets/Area.css";
 import Host from "./Host";
+import { Card } from "semantic-ui-react";
 
 function Area(props) {
-  const { name, hosts, selectHost, selectedHost } = props
+  const { name, hosts, selectHost, selectedHost, nameFormatted } = props
 
   const activeHosts = hosts.filter(host => host.active === true)
 
@@ -19,9 +20,9 @@ function Area(props) {
       id={name}
     >
       <h3 className="labels">
-        {name}
+        {nameFormatted}
       </h3>
-      {renderActiveHosts}
+      <Card.Group itemsPerRow={6}>{renderActiveHosts}</Card.Group>
     </div>
   );
 }
