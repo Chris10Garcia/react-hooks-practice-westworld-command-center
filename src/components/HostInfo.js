@@ -10,7 +10,10 @@ import {
 } from "semantic-ui-react";
 import "../stylesheets/HostInfo.css";
 
-function HostInfo() {
+function HostInfo({selectedHost}) {
+  const {firstName, active, gender, imageUrl, area} = selectedHost
+
+
   // This state is just to show how the dropdown component works.
   // Options have to be formatted in this way (array of objects with keys of: key, text, value)
   // Value has to match the value in the object to render the right text.
@@ -37,7 +40,7 @@ function HostInfo() {
     <Grid>
       <Grid.Column width={6}>
         <Image
-          src={/* pass in the right image here */ ""}
+          src={imageUrl}
           floated="left"
           size="small"
           className="hostImg"
@@ -47,8 +50,7 @@ function HostInfo() {
         <Card>
           <Card.Content>
             <Card.Header>
-              {"Bob"} | {true ? <Icon name="man" /> : <Icon name="woman" />}
-              {/* Think about how the above should work to conditionally render the right First Name and the right gender Icon */}
+              {firstName} | {gender==="Male" ? <Icon name="man" /> : <Icon name="woman" />}
             </Card.Header>
             <Card.Meta>
               {/* Sometimes the label should take "Decommissioned". How are we going to conditionally render that? */}
@@ -56,7 +58,7 @@ function HostInfo() {
               <Radio
                 onChange={handleRadioChange}
                 label={"Active"}
-                checked={true}
+                checked={active}
                 slider
               />
             </Card.Meta>

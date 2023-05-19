@@ -1,28 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Grid } from "semantic-ui-react";
 import Details from "./Details";
 import "../stylesheets/Headquarters.css";
 import ColdStorage from "./ColdStorage";
 import LogPanel from "./LogPanel"
 
-function Headquarters() {
+function Headquarters({hosts, selectedHost, selectHost }) {
 
-  const [hosts, setHosts] = useState([])
+  const coldHosts = hosts.filter(host => !host.active)
 
-  useEffect( ()=>{
-    fetch("http://localhost:3001/hosts" )
-    .then( r => r.json() )
-    .then( d => setHosts(d) )
-  },[])
-    
 
   return (
     <Grid celled="internally">
       <Grid.Column width={8}>
-        <ColdStorage hosts = {hosts}/>
+        <ColdStorage selectHost = {selectHost} hosts = {coldHosts}/>
       </Grid.Column>
       <Grid.Column width={5}>
-        <Details />
+        <Details selectedHost = {selectedHost}/>
       </Grid.Column>
       <Grid.Column width={3}>
         <LogPanel />

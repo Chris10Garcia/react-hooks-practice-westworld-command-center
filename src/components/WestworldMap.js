@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Segment } from "semantic-ui-react";
 import Area from "./Area"
 
-function WestworldMap() {
-  const [areaList, setAreaList] = useState([])
+function WestworldMap({hosts, areaList, selectHost}) {
 
-  useEffect( ()=> {
-    fetch("http://localhost:3001/areas")
-    .then ( r => r.json() )
-    .then ( d => setAreaList(d) )
-  } , [])
 
   const renderArea = areaList.map( area => {
+    const hostArea = hosts.filter( h => h.area === area.name)
     return(
-      <Area key = {area.id} id = {area.id} name = {area.name} limit = {area.limit} auth_req = {area.auth_req} />
+      <Area key = {area.id} id = {area.id} name = {area.name} limit = {area.limit} hosts = {hostArea} selectHost = {selectHost}/>
     )
   })
 
