@@ -21,6 +21,24 @@ function LogPanel({hosts, updateProperty}) {
   const activeHosts = hosts.filter(host => host.active)
 
 
+
+  // ISSUES WITH THIS!!!!!!
+ function handleButton (e){
+
+    if (e.target.innerText === "DECOMMISSION ALL") {
+
+      activeHosts.forEach( host => {
+        console.log(host.active, host.firstName)
+        updateProperty("active", !host.active, host.id)
+      })
+    } else if ( e.target.innerText === "ACTIVATE ALL"){
+      hosts.forEach( host => {
+        console.log(host.active, host.firstName)
+        updateProperty("active", !host.active, host.id)
+      })
+    }
+  }
+
   return (
     <Segment className="HQComps" id="logPanel">
       <pre>
@@ -35,8 +53,8 @@ function LogPanel({hosts, updateProperty}) {
       {/* This isn't always going to be the same color...*/}
       {/* Should the button always read "ACTIVATE ALL"? When should it read "DECOMMISSION ALL"? */}
       { activeHosts.length > 0 
-        ? <Button fluid color={"green"} content={"DECOMMISSION ALL"} onClick={() => console.log(activeHosts.length)}/>
-        : <Button fluid color={"red"} content={"ACTIVATE ALL"} />
+        ? <Button fluid color={"green"} content={"DECOMMISSION ALL"} onClick={handleButton}/>
+        : <Button fluid color={"red"} content={"ACTIVATE ALL"} onClick={handleButton}/>
       }
       
     </Segment>

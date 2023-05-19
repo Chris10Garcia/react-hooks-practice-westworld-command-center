@@ -36,8 +36,9 @@ function App() {
 
   function updateList (obj){
     const updatedList = hosts.map( host => host.id === obj.id ? obj : host)
-    setSelectedHost({...obj})
+    setSelectedHost(obj)
     setHosts(updatedList)
+    
   }
 
   function updateProperty (key, value, id){
