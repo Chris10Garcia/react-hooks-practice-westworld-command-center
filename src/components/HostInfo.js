@@ -10,7 +10,7 @@ import {
 } from "semantic-ui-react";
 import "../stylesheets/HostInfo.css";
 
-function HostInfo({selectedHost, areaList, hosts, updateList}) {
+function HostInfo({selectedHost, areaList, hosts, updateProperty}) {
   
   const {firstName, active, gender, imageUrl, area, id} = selectedHost
 
@@ -35,24 +35,9 @@ function HostInfo({selectedHost, areaList, hosts, updateList}) {
     }
   }
 
-  function handleRadioChange() {
-    console.log(active);
-
-    // fetch request to change status
-    // then set the new object via a cbFunction 
-  }
 
 
-  function updateProperty (key, value, id){
 
-    fetch(`http://localhost:3001/hosts/${id}`,{
-      method: "PATCH",
-      headers: {"Content-Type": "application/json", "Accept" : "application/json"},
-      body: JSON.stringify({[key]: value})
-    })
-    .then( r => r.json() )
-    .then( d => updateList(d))
-  }
 
   return (
     <Grid>

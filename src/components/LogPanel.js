@@ -2,7 +2,7 @@ import React from "react";
 import { Segment, Button } from "semantic-ui-react";
 import { Log } from "../services/Log";
 
-function LogPanel() {
+function LogPanel({hosts, updateProperty}) {
   function dummyLogs() {
     // This is just to show you how this should work. But where should the log data actually get stored?
     // And where should we be creating logs in the first place?
@@ -18,6 +18,9 @@ function LogPanel() {
     return logs;
   }
 
+  const activeHosts = hosts.filter(host => host.active)
+
+
   return (
     <Segment className="HQComps" id="logPanel">
       <pre>
@@ -31,7 +34,11 @@ function LogPanel() {
       {/* Button below is the Activate All/Decommisssion All button */}
       {/* This isn't always going to be the same color...*/}
       {/* Should the button always read "ACTIVATE ALL"? When should it read "DECOMMISSION ALL"? */}
-      <Button fluid color={"red"} content={"ACTIVATE ALL"} />
+      { activeHosts.length > 0 
+        ? <Button fluid color={"green"} content={"DECOMMISSION ALL"} onClick={() => console.log(activeHosts.length)}/>
+        : <Button fluid color={"red"} content={"ACTIVATE ALL"} />
+      }
+      
     </Segment>
   );
 }

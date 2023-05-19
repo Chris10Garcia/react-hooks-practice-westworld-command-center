@@ -40,10 +40,20 @@ function App() {
     setHosts(updatedList)
   }
 
+  function updateProperty (key, value, id){
+    fetch(`http://localhost:3001/hosts/${id}`,{
+      method: "PATCH",
+      headers: {"Content-Type": "application/json", "Accept" : "application/json"},
+      body: JSON.stringify({[key]: value})
+    })
+    .then( r => r.json() )
+    .then( d => updateList(d))
+  }
+
   return (
     <Segment id="app">
       <WestworldMap hosts = {hosts} selectHost = {selectHost} selectedHost = {selectedHost} areaList = {areaList} />
-      <Headquarters hosts = {hosts} selectHost = {selectHost} selectedHost = {selectedHost} areaList = {areaList} updateList = {updateList} />
+      <Headquarters hosts = {hosts} selectHost = {selectHost} selectedHost = {selectedHost} areaList = {areaList} updateProperty={updateProperty} />
     </Segment>
   );
 }

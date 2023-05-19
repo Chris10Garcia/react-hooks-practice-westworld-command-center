@@ -22,7 +22,7 @@ function Area(props) {
       <h3 className="labels">
         {nameFormatted}
       </h3>
-      <Card.Group itemsPerRow={6}>{renderActiveHosts}</Card.Group>
+      <Card.Group itemsPerRow={6}> {renderActiveHosts} </Card.Group>
     </div>
   );
 }
