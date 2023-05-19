@@ -2,7 +2,7 @@ import React from "react";
 import { Segment, Button } from "semantic-ui-react";
 import { Log } from "../services/Log";
 
-function LogPanel({hosts, updateProperty}) {
+function LogPanel({hosts, updateProperty, setHosts}) {
   function dummyLogs() {
     // This is just to show you how this should work. But where should the log data actually get stored?
     // And where should we be creating logs in the first place?
@@ -20,23 +20,46 @@ function LogPanel({hosts, updateProperty}) {
 
   const activeHosts = hosts.filter(host => host.active)
 
+  function updatePropertyFix (key, value, id){
+    fetch(`http://localhost:3001/hosts/${id}`,{
+      method: "PATCH",
+      headers: {"Content-Type": "application/json", "Accept" : "application/json"},
+      body: JSON.stringify({[key]: value})
+    })
+    .then( r => r.json() )
+  }
 
 
-  // ISSUES WITH THIS!!!!!!
  function handleButton (e){
 
     if (e.target.innerText === "DECOMMISSION ALL") {
 
       activeHosts.forEach( host => {
-        console.log(host.active, host.firstName)
-        updateProperty("active", !host.active, host.id)
+        updatePropertyFix("active", !host.active, host.id)
       })
+
+      const testData = hosts.map ( host => {
+        host.active = host.active ? !host.active : host.active
+        return host
+      })
+
+      setHosts(testData)
+
     } else if ( e.target.innerText === "ACTIVATE ALL"){
+
       hosts.forEach( host => {
-        console.log(host.active, host.firstName)
-        updateProperty("active", !host.active, host.id)
+
+        updatePropertyFix("active", !host.active, host.id)
       })
+
+      const testData = hosts.map ( host => {
+        host.active = !host.active ? !host.active : host.active
+        return host
+      })
+
+      setHosts(testData)
     }
+
   }
 
   return (

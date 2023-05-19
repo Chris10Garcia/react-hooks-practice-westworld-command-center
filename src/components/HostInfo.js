@@ -19,6 +19,7 @@ function HostInfo({selectedHost, areaList, hosts, updateProperty}) {
   })
 
   const [options] = useState(optionsList);
+  // const [activeStatus, setActiveStatus] = useState(active)
 
   function handleOptionChange(e, { value }) {
     // the 'value' attribute is given via Semantic's Dropdown component.
@@ -36,7 +37,9 @@ function HostInfo({selectedHost, areaList, hosts, updateProperty}) {
   }
 
 
-
+function handleRadioChange(){
+  updateProperty("active", !active, id)
+}
 
 
   return (
@@ -59,7 +62,7 @@ function HostInfo({selectedHost, areaList, hosts, updateProperty}) {
               {/* Sometimes the label should take "Decommissioned". How are we going to conditionally render that? */}
               {/* Checked takes a boolean and determines what position the switch is in. Should it always be true? */}
               <Radio
-                onChange={ () => updateProperty("active", !active, id) }
+                onChange={handleRadioChange }
                 label={"Active"}
                 checked={active}
                 slider

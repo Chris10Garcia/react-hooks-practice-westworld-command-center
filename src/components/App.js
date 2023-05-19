@@ -35,8 +35,9 @@ function App() {
   }
 
   function updateList (obj){
-    const updatedList = hosts.map( host => host.id === obj.id ? obj : host)
     setSelectedHost(obj)
+    const updatedList = hosts.map( host => {
+      return host.id === obj.id ? obj : host})
     setHosts(updatedList)
     
   }
@@ -54,7 +55,7 @@ function App() {
   return (
     <Segment id="app">
       <WestworldMap hosts = {hosts} selectHost = {selectHost} selectedHost = {selectedHost} areaList = {areaList} />
-      <Headquarters hosts = {hosts} selectHost = {selectHost} selectedHost = {selectedHost} areaList = {areaList} updateProperty={updateProperty} />
+      <Headquarters hosts = {hosts} selectHost = {selectHost} selectedHost = {selectedHost} areaList = {areaList} updateProperty={updateProperty} setHosts = {setHosts} />
     </Segment>
   );
 }
