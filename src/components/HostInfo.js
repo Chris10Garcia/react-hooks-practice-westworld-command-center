@@ -9,9 +9,9 @@ import {
   Divider,
 } from "semantic-ui-react";
 import "../stylesheets/HostInfo.css";
+import { Log } from "../services/Log"
 
-function HostInfo({selectedHost, areaList, hosts, updateProperty}) {
-  
+function HostInfo({selectedHost, areaList, hosts, updateProperty, setLogs, logs}) {
   const {firstName, active, gender, imageUrl, area, id} = selectedHost
 
   const optionsList = areaList.map( location => {
@@ -19,26 +19,32 @@ function HostInfo({selectedHost, areaList, hosts, updateProperty}) {
   })
 
   const [options] = useState(optionsList);
-  // const [activeStatus, setActiveStatus] = useState(active)
 
   function handleOptionChange(e, { value }) {
-    // the 'value' attribute is given via Semantic's Dropdown component.
-    // Put a debugger or console.log in here and see what the "value" variable is when you pass in different options.
-    // See the Semantic docs for more info: https://react.semantic-ui.com/modules/dropdown/#usage-controlled
     const areaLimit = areaList.find( area => area.name === value).limit
     const currentHostInArea = hosts.filter( host => host.area === value).length
 
+    const valueCorrected = value.split("_").map( word => word.charAt(0).toUpperCase() + word.substring(1)).join(" ")
     if (currentHostInArea + 1 > areaLimit){
-      console.log("error, you reached your limit")
+      setLogs([Log.error(`Too many hosts. Cannot add ${firstName} to ${valueCorrected}`), ...logs])
     } else {
-      console.log(value)
       updateProperty("area", value, selectedHost.id)
+      setLogs([Log.notify(`${firstName} set in area ${valueCorrected}`), ...logs])
     }
   }
 
 
 function handleRadioChange(){
+
+  if (active){
+    setLogs([Log.notify(`Decommisioned ${firstName}`), ...logs])
+  } else {
+    setLogs([Log.warn(`Activated ${firstName}`), ...logs])
+  }
+
   updateProperty("active", !active, id)
+  
+
 }
 
 

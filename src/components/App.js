@@ -14,12 +14,19 @@ function App() {
   useEffect( ()=>{
     fetch("http://localhost:3001/hosts" )
     .then( r => r.json() )
-    .then( d => setHosts(d) )
+    .then( d => {
+      
+      const formattedData = d.map( person => {
+        const areaCorrected = person.area.split("_").map( word => word.charAt(0).toUpperCase() + word.substring(1)).join(" ")
+        person["areaFormatted"] = areaCorrected
+        return person                                 
+      })
+      setHosts(formattedData) 
+    })
 
     fetch("http://localhost:3001/areas")
     .then ( r => r.json() )
     .then ( d => {
-
       const formattedData = d.map( area => {
           const nameCorrected = area.name.split("_").map( word => word.charAt(0).toUpperCase() + word.substring(1)).join(" ")
           area["nameFormatted"] = nameCorrected
