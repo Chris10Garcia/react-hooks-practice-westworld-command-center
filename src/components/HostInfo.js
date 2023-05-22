@@ -65,11 +65,9 @@ function handleRadioChange(){
               {firstName} | {gender==="Male" ? <Icon name="man" /> : <Icon name="woman" />}
             </Card.Header>
             <Card.Meta>
-              {/* Sometimes the label should take "Decommissioned". How are we going to conditionally render that? */}
-              {/* Checked takes a boolean and determines what position the switch is in. Should it always be true? */}
               <Radio
                 onChange={handleRadioChange }
-                label={"Active"}
+                label={active ? "Active" : "Decommissioned"}
                 checked={active}
                 slider
               />
